@@ -18,4 +18,3 @@ var IgnorePaths = []string{
 }
 
 var BuildExecutable string = ""
-var BuildSource string = ""

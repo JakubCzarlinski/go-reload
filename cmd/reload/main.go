@@ -17,12 +17,10 @@ func main() {
 	flag.Parse()
 
 	internal.BuildExecutable = *builderPath + "build.exe"
-	internal.BuildSource = *builderPath + "build.go"
 
 	err := internal.RunProcess(
-		".", "go", "build", "-ldflags=-s -w", "-o",
-		internal.BuildExecutable,
-		internal.BuildSource,
+		*builderPath, "go", "build", "-ldflags=-s -w", "-o",
+		"build.exe", "build.go",
 	)
 	if err != nil {
 		logging.FatalF("Failed to build builder: %v", err)

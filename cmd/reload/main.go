@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"os"
 	"os/exec"
 
@@ -9,24 +8,20 @@ import (
 	"github.com/JakubCzarlinski/go-reload/internal"
 )
 
-var (
-	builderPath = flag.String("builder", "./builder/", "Path to the builder executable")
-)
-
 func main() {
-	flag.Parse()
-
-	internal.BuildExecutable = *builderPath + "build.exe"
+	// Open reload.json if it exists, otherwise create a new one with default values
+	config := internal.NewConfig()
+	config.BuildExecutable = config.BuilderPath + "build.exe"
 
 	err := internal.RunProcess(
-		*builderPath, "go", "build", "-ldflags=-s -w", "-o",
+		config.BuilderPath, "go", "build", "-ldflags=-s -w", "-o",
 		"build.exe", "build.go",
 	)
 	if err != nil {
 		logging.FatalF("Failed to build builder: %v", err)
 	}
 
-	err = internal.RunProcess(".", internal.BuildExecutable)
+	err = internal.RunProcess(".", config.BuildExecutable)
 	if err != nil {
 		logging.FatalF("Failed to build: %v", err)
 	}

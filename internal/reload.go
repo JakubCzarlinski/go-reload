@@ -15,7 +15,7 @@ func (h *buildHandler) onModified(event fsnotify.Event) {
 	if err == nil && fileInfo.IsDir() {
 		return
 	}
-	for _, ignorePath := range IgnorePaths {
+	for _, ignorePath := range config.IgnorePaths {
 		replacedName := strings.ReplaceAll(event.Name, "\\", "/")
 		if strings.Contains(replacedName, ignorePath) {
 			return
@@ -41,11 +41,11 @@ func (h *buildHandler) onModified(event fsnotify.Event) {
 
 	buildStart := time.Now()
 	if strings.Contains(event.Name, ".go") || strings.Contains(event.Name, ".templ") {
-		h.buildProcess = exec.Command(BuildExecutable, "go")
+		h.buildProcess = exec.Command(config.BuildExecutable, "go")
 	} else if strings.Contains(event.Name, ".sql") {
-		h.buildProcess = exec.Command(BuildExecutable, "sql")
+		h.buildProcess = exec.Command(config.BuildExecutable, "sql")
 	} else {
-		h.buildProcess = exec.Command(BuildExecutable)
+		h.buildProcess = exec.Command(config.BuildExecutable)
 	}
 	// h.buildProcess.Stdout = os.Stdout
 	h.buildProcess.Stderr = os.Stderr

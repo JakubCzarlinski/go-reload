@@ -9,18 +9,20 @@ import (
 )
 
 var baseDir string
-var asciiArt string
+
+const asciiArt string = `
+               _____
+              /     \
+              vvvvvvv /|___/|
+                 I  /O,O    |
+                 I /_____   |     /| /|
+                J|/^ ^ ^ \  |    /00  |    _//|
+                 |^ ^ ^ ^ |W|   |/^^\ |   /oo |
+                  \m___m__|_|    \m_m_|   \mm_|`
 
 func init() {
 	baseDir, _ = os.Getwd()
 	logging.InfoF("Calling from %s", baseDir)
-
-	// Load the ASCII art from ./art
-	artFile, err := os.ReadFile("./art")
-	if err != nil {
-		logging.FatalF("Failed to load ASCII art: %v", err)
-	}
-	asciiArt = string(artFile)
 }
 
 func DrawAsciiArt() {
@@ -29,6 +31,6 @@ func DrawAsciiArt() {
 	cmd.Stderr = os.Stderr
 	cmd.Run()
 
-	fmt.Print(logging.Blue("\n" + asciiArt))
+	fmt.Println(logging.Blue(asciiArt))
 	fmt.Println(logging.Green("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"))
 }

@@ -23,7 +23,7 @@ func (h *buildHandler) onModified(event fsnotify.Event) {
 	}
 
 	now := time.Now()
-	if time.Since(h.previousTime) < 3000*time.Millisecond {
+	if time.Since(h.previousTime) < time.Duration(h.reloadTime)*time.Millisecond {
 		return
 	}
 

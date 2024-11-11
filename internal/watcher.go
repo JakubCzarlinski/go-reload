@@ -20,14 +20,15 @@ type buildHandler struct {
 	previousTime  time.Time
 	counter       int
 	mutex         sync.Mutex
+	reloadTime    int64
 }
 
-func NewBuildHandler() *buildHandler {
+func NewBuildHandler(config *Config) *buildHandler {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		logging.FatalF("Failed to create watcher: %v", err)
 	}
-	handler := &buildHandler{watcher: watcher}
+	handler := &buildHandler{watcher: watcher, reloadTime: config.ReloadTime}
 	go handler.watchEvents()
 	return handler
 }

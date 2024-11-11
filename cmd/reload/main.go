@@ -33,7 +33,7 @@ func main() {
 
 	internal.DrawAsciiArt()
 
-	handler := internal.NewBuildHandler()
+	handler := internal.NewBuildHandler(config)
 	defer handler.Close()
 
 	handler.WatchDir(".")

@@ -13,6 +13,7 @@ type Config struct {
 	BuilderPath     string   `json:"builderPath,omitempty"`
 	IgnorePaths     []string `json:"ignorePaths,omitempty"`
 	BuildExecutable string   `json:"-"`
+	ReloadTime      int64    `json:"reloadTime,omitempty"`
 }
 
 func NewConfig() *Config {
@@ -75,4 +76,5 @@ var defaultConfig = Config{
 		".exe",
 		".vscode",
 	},
+	ReloadTime: 3000,
 }
